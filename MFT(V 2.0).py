@@ -25,7 +25,7 @@ try:
     cn.execute(''' CREATE TABLE DATA 
                (ID INTEGER PRIMARY KEY,
                 USER TEXT NOT NULL,
-                PASS TEXT NOT NULL,
+                PASS TEXT NOT NULL
                 );''')
     print('Table Created Successfully ✔ ')
 except:
