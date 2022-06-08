@@ -16,18 +16,20 @@ except FileExistsError:
 
 #DATABASE
 try:
-    cn = sq.connect('C:/mft/data.db')
+    connection = sq.connect('C:/mft/data.db')
     print('Successfully Connected ✔ '+'\n')
 except:
     print('Error')
-try:
 
-    cn.execute(''' CREATE TABLE DATA 
+try:
+    
+    connection.execute(''' CREATE TABLE DATA
                (ID INTEGER PRIMARY KEY,
                 USER TEXT NOT NULL,
                 PASS TEXT NOT NULL
                 );''')
     print('Table Created Successfully ✔ ')
+    
 except:
     print('Table ✔ '+'\n')
 
@@ -214,7 +216,7 @@ def verify_login():
 
     try:
 
-        check = cn.execute("SELECT USER,PASS FROM DATA WHERE USER=? AND PASS=?",(u,p))
+        check = connection.execute("SELECT USER,PASS FROM DATA WHERE USER=? AND PASS=?",(u,p))
         check = check.fetchone()
         
         if check != None:
@@ -242,13 +244,13 @@ def register_user():
     p = reg_pw_ent.get()
     try:
 
-        check = cn.execute("SELECT USER,PASS FROM DATA WHERE USER=? ",(u,))
+        check = connection.execute("SELECT USER,PASS FROM DATA WHERE USER=? ",(u,))
         check = check.fetchone()
     
         if check==None:
-            cn.execute('''INSERT INTO DATA (USER,PASS)
+            connection.execute('''INSERT INTO DATA (USER,PASS)
             VALUES (?,?)''',(u,p))
-            cn.commit()
+            connection.commit()
             reg_msg.configure(text='Successfully Submited ✔ ',fg="green")
         else:
             reg_msg.configure(text='Username Already Exist!',fg="red")
@@ -262,7 +264,7 @@ def delete_user():
 
     try:
 
-        check = cn.execute("SELECT USER,PASS FROM DATA WHERE USER=? AND PASS=?",(u,p))
+        check = connection.execute("SELECT USER,PASS FROM DATA WHERE USER=? AND PASS=?",(u,p))
         check = check.fetchone()
 
 
@@ -280,8 +282,8 @@ def confirm():
         msg_box = messagebox.askquestion('Confirmation','Are You Sure?')
         if msg_box == 'yes' :
 
-            de = cn.execute("DELETE FROM DATA  WHERE USER=? AND PASS=?",(check[0],check[1]))
-            cn.commit()
+            de = connection.execute("DELETE FROM DATA  WHERE USER=? AND PASS=?",(check[0],check[1]))
+            connection.commit()
             del_msg.configure(text='Successfully Deleted ✔',fg="green")
         elif msg_box == 'no' :
             pass
