@@ -16,25 +16,24 @@ except FileExistsError:
 
 #DATABASE
 try:
-    connection = sq.connect('C:/mft/data.db')
+    cn = sq.connect('C:/mft/data.db')
     print('Successfully Connected ✔ '+'\n')
 except:
     print('Error')
-
 try:
-    
-    connection.execute(''' CREATE TABLE DATA
+
+    cn.execute(''' CREATE TABLE DATA 
                (ID INTEGER PRIMARY KEY,
                 USER TEXT NOT NULL,
-                PASS TEXT NOT NULL
+                PASS TEXT NOT NULL,
                 );''')
     print('Table Created Successfully ✔ ')
-    
 except:
     print('Table ✔ '+'\n')
 
 
 def root():
+    
     global ws
     ws = Tk()
     ws.title('MFT Project')
@@ -54,22 +53,22 @@ def widgets():
     Label(text="",bg='#12181E').pack()
     
     #buttons
-    login_btn=Button(ws,text='Login',height="2",font=('',13,'bold'), width="30",fg='white',bg='#6495ED',command=destroy_to_login)
+    login_btn=Button(ws,text='Login',height="2",font=('',13,'bold'), width="30",fg='white',bg='#6495ED',command=destroy_to_login,bd=0,activebackground='#4B6EAD')
     login_btn.pack()
     
     Label(text="",bg='#12181E').pack()
     
-    reg_btn=Button(ws,text='Register',height="2",font=('',13,'bold'), width="30",fg='white',bg='#6495ED',command=destroy_to_register)
+    reg_btn=Button(ws,text='Register',height="2",font=('',13,'bold'), width="30",fg='white',bg='#6495ED',command=destroy_to_register,bd=0,activebackground='#4B6EAD')
     reg_btn.pack()
     
     Label(text="",bg='#12181E').pack()
     
-    del_btn=Button(ws,text='Delete Account',height="2",font=('',13,'bold'), width="30",fg='white',bg='#6495ED',command=destroy_to_delete_account)
+    del_btn=Button(ws,text='Delete Account',height="2",font=('',13,'bold'), width="30",fg='white',bg='#6495ED',command=destroy_to_delete_account,bd=0,activebackground='#4B6EAD')
     del_btn.pack()
     
     Label(text="",bg='#12181E').pack()
     
-    exit_btn=Button(ws,text='Exit',height="2",font=('',13,'bold'), width="30",fg='white',bg='#6495ED',command=ws.destroy)
+    exit_btn=Button(ws,text='Exit',height="2",font=('',13,'bold'), width="30",fg='white',bg='#6495ED',command=ws.destroy,bd=0,activebackground='#4B6EAD')
     exit_btn.pack()
     ws.mainloop()
 def destroy_to_login():
@@ -127,12 +126,12 @@ def login_page():
     
     Label(text="",bg='#12181E').pack()
     #buttons
-    lgn_btn=Button(ws,text='Login',height="2",font=('',11,'bold'), width="30",fg='white',bg='#51E79D',command=verify_login)
+    lgn_btn=Button(ws,text='Login',height="2",font=('',11,'bold'), width="30",fg='white',bg='#51E79D',command=verify_login,bd=0,activebackground='#41A071')
     lgn_btn.pack()
     
     Label(text="",bg='#12181E').pack()
     
-    bck_btn=Button(ws,text='back',height="2",font=('default',9,'bold'), width="30",fg='white',bg='#6495ED',command=destroy_to_main)
+    bck_btn=Button(ws,text='back',height="2",font=('default',9,'bold'), width="30",fg='white',bg='#6495ED',command=destroy_to_main,bd=0,activebackground='#4B6EAD')
     bck_btn.pack()
     
     lgn_msg=Label(ws,text='',fg='red',bg='#12181E')
@@ -162,12 +161,12 @@ def register_page():
     
     Label(text="",bg='#12181E').pack()
     #buttons
-    reg_btn=Button(ws,text='Register',height="2",font=('',11,'bold'), width="30",fg='white',bg='#51E79D',command=register_user)
+    reg_btn=Button(ws,text='Register',height="2",font=('',11,'bold'), width="30",fg='white',bg='#51E79D',command=register_user,bd=0,activebackground='#41A071')
     reg_btn.pack()
     
     Label(text="",bg='#12181E').pack()
     
-    bck_btn=Button(ws,text='back',height="2",font=('default',9,'bold'), width="30",fg='white',bg='#6495ED',command=destroy_to_main)
+    bck_btn=Button(ws,text='back',height="2",font=('default',9,'bold'), width="30",fg='white',bg='#6495ED',command=destroy_to_main,bd=0,activebackground='#4B6EAD')
     bck_btn.pack()
     
     reg_msg=Label(ws,text='',fg='red',bg='#12181E')
@@ -197,13 +196,13 @@ def delete_account_page():
     
     Label(text="",bg='#12181E').pack()
     #buttons
-    del_btn=Button(ws,text='Delete Account',height="2",font=('',11,'bold'), width="30",fg='white',bg='#51E79D',command=delete_user)
+    del_btn=Button(ws,text='Delete Account',height="2",font=('',11,'bold'), width="30",fg='white',bg='#51E79D',command=delete_user,bd=0,activebackground='#41A071')
     del_btn.pack()
     
     
     Label(text="",bg='#12181E').pack()
     
-    bck_btn=Button(ws,text='back',height="2",font=('default',9,'bold'), width="30",fg='white',bg='#6495ED',command=destroy_to_main)
+    bck_btn=Button(ws,text='back',height="2",font=('default',9,'bold'), width="30",fg='white',bg='#6495ED',command=destroy_to_main,bd=0,activebackground='#4B6EAD')
     bck_btn.pack()
     
     del_msg=Label(ws,text='',fg='red',bg='#12181E')
@@ -216,7 +215,7 @@ def verify_login():
 
     try:
 
-        check = connection.execute("SELECT USER,PASS FROM DATA WHERE USER=? AND PASS=?",(u,p))
+        check = cn.execute("SELECT USER,PASS FROM DATA WHERE USER=? AND PASS=?",(u,p))
         check = check.fetchone()
         
         if check != None:
@@ -244,13 +243,13 @@ def register_user():
     p = reg_pw_ent.get()
     try:
 
-        check = connection.execute("SELECT USER,PASS FROM DATA WHERE USER=? ",(u,))
+        check = cn.execute("SELECT USER,PASS FROM DATA WHERE USER=? ",(u,))
         check = check.fetchone()
     
         if check==None:
-            connection.execute('''INSERT INTO DATA (USER,PASS)
+            cn.execute('''INSERT INTO DATA (USER,PASS)
             VALUES (?,?)''',(u,p))
-            connection.commit()
+            cn.commit()
             reg_msg.configure(text='Successfully Submited ✔ ',fg="green")
         else:
             reg_msg.configure(text='Username Already Exist!',fg="red")
@@ -264,7 +263,7 @@ def delete_user():
 
     try:
 
-        check = connection.execute("SELECT USER,PASS FROM DATA WHERE USER=? AND PASS=?",(u,p))
+        check = cn.execute("SELECT USER,PASS FROM DATA WHERE USER=? AND PASS=?",(u,p))
         check = check.fetchone()
 
 
@@ -282,11 +281,12 @@ def confirm():
         msg_box = messagebox.askquestion('Confirmation','Are You Sure?')
         if msg_box == 'yes' :
 
-            de = connection.execute("DELETE FROM DATA  WHERE USER=? AND PASS=?",(check[0],check[1]))
-            connection.commit()
+            de = cn.execute("DELETE FROM DATA  WHERE USER=? AND PASS=?",(check[0],check[1]))
+            cn.commit()
             del_msg.configure(text='Successfully Deleted ✔',fg="green")
         elif msg_box == 'no' :
             pass
     except:
         pass
 root()
+#1.42
