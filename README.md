@@ -1,1 +1,1 @@
-Tkinter Login/Registration And Delete Working With Database
+Simple Tkinter Gui Login,Registration And Delete Account Working With Database SQLite
